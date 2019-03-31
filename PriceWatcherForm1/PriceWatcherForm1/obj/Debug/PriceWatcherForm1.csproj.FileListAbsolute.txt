@@ -1,0 +1,14 @@
+D:\Code\PriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\PriceWatcherForm1.exe.config
+D:\Code\PriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\PriceWatcherForm1.exe
+D:\Code\PriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\PriceWatcherForm1.pdb
+D:\Code\PriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.csprojAssemblyReference.cache
+D:\Code\PriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.Form1.resources
+D:\Code\PriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.Properties.Resources.resources
+D:\Code\PriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.csproj.GenerateResource.cache
+D:\Code\PriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.csproj.CoreCompileInputs.cache
+D:\Code\PriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.exe
+D:\Code\PriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.pdb
+D:\Code\PriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\Newtonsoft.Json.dll
+D:\Code\PriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\Newtonsoft.Json.pdb
+D:\Code\PriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\Newtonsoft.Json.xml
+D:\Code\PriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.csproj.CopyComplete
