@@ -14,15 +14,24 @@ namespace PriceWatcherForm1
 {
     public partial class Form1 : Form
     {
+
+
         public Form1()
         {
             InitializeComponent();
         }
 
-
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1_Resize(object sender, EventArgs e)
         {
-
+            if (WindowState == FormWindowState.Minimized)
+            {
+                this.Hide();
+            }
+        }
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
         }
 
 
@@ -49,12 +58,14 @@ namespace PriceWatcherForm1
                 itembox.Text = "";
                 minpricebox.Value = 0;
                 maxpricebox.Value = 0;
+                checkprices();
             }
         }
 
         private void updatepricesbutton_Click(object sender, EventArgs e)
         {
             updatePrice();
+            checkprices();
            /* GetItemPrice getItemPrice = new GetItemPrice();
             string item = string.Empty;
             foreach (ListViewItem anItem in watchlist.Items)
@@ -98,6 +109,7 @@ namespace PriceWatcherForm1
         private void updatebutton_Click(object sender, EventArgs e)
         {
             updateItem();
+            checkprices();
         }
         private void deleteItem()
         {
@@ -109,7 +121,14 @@ namespace PriceWatcherForm1
         }
         private void deleteitembutton_Click(object sender, EventArgs e)
         {
-            deleteItem();
+            if (watchlist.SelectedItems.Count == 0)
+            {
+                return;
+            }
+            else
+            {
+                deleteItem();
+            }
         }
 
         private void watchlist_MouseClick(object sender, MouseEventArgs e)
@@ -142,9 +161,42 @@ namespace PriceWatcherForm1
             {
                 row.SubItems[1] = new ListViewItem.ListViewSubItem(row, getItemPrice.GetItemPrices(row.SubItems[0].Text, OSBJson));
             }
+            checkprices();
         }
 
         private void updaterstart_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void notify()
+        {
+            notifyIcon1.Icon = SystemIcons.Application;
+            notifyIcon1.ShowBalloonTip(1000, "PriceWatcher Alert!", "Your item(s) hit your goal price.",ToolTipIcon.Info);
+        }
+         private void checkprices()
+        {
+            foreach (ListViewItem row in watchlist.Items)
+            {
+                if ((Int32.Parse(row.SubItems[2].Text) != 0) && (Int32.Parse(row.SubItems[2].Text) >= Int32.Parse(row.SubItems[1].Text)))
+                {
+                    row.BackColor = System.Drawing.Color.Green;
+                    notify();
+                }
+                else if ((Int32.Parse(row.SubItems[3].Text) != 0) && (Int32.Parse(row.SubItems[3].Text) <= Int32.Parse(row.SubItems[1].Text)))
+                {
+                    row.BackColor = System.Drawing.Color.Red;
+                    notify();
+                }
+                else
+                {
+                    row.BackColor = System.Drawing.Color.White;
+                }
+
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }

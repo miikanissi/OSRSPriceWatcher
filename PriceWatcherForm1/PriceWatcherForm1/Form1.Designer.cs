@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
@@ -48,6 +49,7 @@
             this.deleteitembutton = new System.Windows.Forms.Button();
             this.updatetimer = new System.Windows.Forms.Timer(this.components);
             this.updaterstart = new System.Windows.Forms.Button();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minpricebox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxpricebox)).BeginInit();
@@ -144,6 +146,7 @@
             this.Currentprice,
             this.minpricee,
             this.maxpricee});
+            this.watchlist.ForeColor = System.Drawing.SystemColors.WindowText;
             this.watchlist.FullRowSelect = true;
             this.watchlist.GridLines = true;
             this.watchlist.Location = new System.Drawing.Point(28, 109);
@@ -208,7 +211,7 @@
             // 
             // updatetimer
             // 
-            this.updatetimer.Interval = 1800000;
+            this.updatetimer.Interval = 10000;
             this.updatetimer.Tick += new System.EventHandler(this.updatetimer_Tick);
             // 
             // updaterstart
@@ -221,6 +224,13 @@
             this.updaterstart.UseVisualStyleBackColor = true;
             this.updaterstart.Click += new System.EventHandler(this.updaterstart_Click);
             this.updaterstart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.updaterstart_MouseClick);
+            // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "PriceWatcher";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
             // Form1
             // 
@@ -241,11 +251,13 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PriceWatcher by Piksu";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minpricebox)).EndInit();
@@ -275,6 +287,7 @@
         private System.Windows.Forms.Button deleteitembutton;
         private System.Windows.Forms.Timer updatetimer;
         private System.Windows.Forms.Button updaterstart;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 
