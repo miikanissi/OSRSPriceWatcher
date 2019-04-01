@@ -26,3 +26,17 @@ D:\Code\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\PriceWatc
 D:\Code\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\PriceWatcher.pdb
 D:\Code\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.exe
 D:\Code\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.pdb
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\PriceWatcher.exe.config
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\PriceWatcher.exe
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\PriceWatcher.pdb
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\Newtonsoft.Json.dll
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\Newtonsoft.Json.xml
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.csprojAssemblyReference.cache
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.Form1.resources
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.Properties.Resources.resources
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.csproj.GenerateResource.cache
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.csproj.CoreCompileInputs.cache
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.csproj.CopyComplete
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.exe
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.pdb

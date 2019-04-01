@@ -1,12 +1,15 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -39,26 +42,69 @@ namespace PriceWatcherForm1
         {
 
         }
-
+        private void saveViewList()
+        {
+            String path = Application.StartupPath + @"\record.txt";
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+            using (StreamWriter textStream = new StreamWriter(path, false, Encoding.UTF8))
+            {
+                foreach (ListViewItem item in watchlist.Items)
+                {
+                    textStream.WriteLine("{0},{1},{2},{3}", item.Text, item.SubItems[1].Text, item.SubItems[2].Text, item.SubItems[3].Text);
+                }
+                textStream.Close();
+            }
+        }
+        private void loadViewList()
+        {
+            String file = Application.StartupPath + @"\record.txt";
+            using (var sr = new StreamReader(file))
+            {
+                string fileLine;
+                while ((fileLine = sr.ReadLine()) != null)
+                {
+                    string[] rivi = fileLine.Split(',');
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.Text = rivi[0];
+                    lvi.SubItems.Add(rivi[1]);
+                    lvi.SubItems.Add(rivi[2]);
+                    lvi.SubItems.Add(rivi[3]);
+                    watchlist.Items.Add(lvi);
+                }
+            }
+            
+        }
         private void additembtn_Click(object sender, EventArgs e)
         {
-            if ((minpricebox.Value > maxpricebox.Value) && (minpricebox.Value != 0 && maxpricebox.Value != 0))
+            GetItemPrice getItemPrice = new GetItemPrice();
+            JObject OSBJson = JObject.Parse(new WebClient().DownloadString("https://rsbuddy.com/exchange/summary.json"));
+            string nimi = getItemPrice.GetItem(itembox.Text, OSBJson);
+            if (nimi != itembox.Text)
             {
                 return;
             }
             else
             {
-                JObject OSBJson = JObject.Parse(new WebClient().DownloadString("https://rsbuddy.com/exchange/summary.json"));
-                GetItemPrice getItemPrice = new GetItemPrice();
-                ListViewItem lvi = new ListViewItem(itembox.Text);
-                lvi.SubItems.Add(getItemPrice.GetItemPrices(itembox.Text, OSBJson));
-                lvi.SubItems.Add(minpricebox.Value.ToString());
-                lvi.SubItems.Add(maxpricebox.Value.ToString());
-                watchlist.Items.Add(lvi);
-                itembox.Text = "";
-                minpricebox.Value = 0;
-                maxpricebox.Value = 0;
-                checkprices();
+
+                if ((minpricebox.Value > maxpricebox.Value) && (minpricebox.Value != 0 && maxpricebox.Value != 0))
+                {
+                    return;
+                }
+                else
+                {
+                    ListViewItem lvi = new ListViewItem(itembox.Text);
+                    lvi.SubItems.Add(getItemPrice.GetItemPrices(itembox.Text, OSBJson));
+                    lvi.SubItems.Add(minpricebox.Value.ToString());
+                    lvi.SubItems.Add(maxpricebox.Value.ToString());
+                    watchlist.Items.Add(lvi);
+                    itembox.Text = "";
+                    minpricebox.Value = 0;
+                    maxpricebox.Value = 0;
+                    checkprices();
+                }
             }
         }
 
@@ -66,14 +112,14 @@ namespace PriceWatcherForm1
         {
             updatePrice();
             checkprices();
-           /* GetItemPrice getItemPrice = new GetItemPrice();
-            string item = string.Empty;
-            foreach (ListViewItem anItem in watchlist.Items)
-            {
+            /* GetItemPrice getItemPrice = new GetItemPrice();
+             string item = string.Empty;
+             foreach (ListViewItem anItem in watchlist.Items)
+             {
 
-                anItem.SubItems.Add(getItemPrice.GetItemPrices(anItem.Text));
-              
-            }*/
+                 anItem.SubItems.Add(getItemPrice.GetItemPrices(anItem.Text));
+
+             }*/
         }
         private void updatePrice()
         {
@@ -87,29 +133,39 @@ namespace PriceWatcherForm1
         }
         private void updateItem()
         {
-            if (watchlist.SelectedItems.Count == 0)
+            JObject OSBJson = JObject.Parse(new WebClient().DownloadString("https://rsbuddy.com/exchange/summary.json"));
+
+            GetItemPrice getItemPrice = new GetItemPrice();
+
+            string nimi = getItemPrice.GetItem(itembox.Text, OSBJson);
+            if (nimi != itembox.Text)
             {
                 return;
             }
             else
             {
-                JObject OSBJson = JObject.Parse(new WebClient().DownloadString("https://rsbuddy.com/exchange/summary.json"));
+                if (watchlist.SelectedItems.Count == 0)
+                {
+                    return;
+                }
+                else
+                {
 
-                GetItemPrice getItemPrice = new GetItemPrice();
-                watchlist.SelectedItems[0].SubItems[0].Text = itembox.Text;
-                watchlist.SelectedItems[0].SubItems[1].Text = getItemPrice.GetItemPrices(itembox.Text, OSBJson);
-                watchlist.SelectedItems[0].SubItems[2].Text = minpricebox.Value.ToString();
-                watchlist.SelectedItems[0].SubItems[3].Text = maxpricebox.Value.ToString();
+                    watchlist.SelectedItems[0].SubItems[0].Text = itembox.Text;
+                    watchlist.SelectedItems[0].SubItems[1].Text = getItemPrice.GetItemPrices(itembox.Text, OSBJson);
+                    watchlist.SelectedItems[0].SubItems[2].Text = minpricebox.Value.ToString();
+                    watchlist.SelectedItems[0].SubItems[3].Text = maxpricebox.Value.ToString();
 
-                itembox.Text = "";
-                minpricebox.Value = 0;
-                maxpricebox.Value = 0;
+                    itembox.Text = "";
+                    minpricebox.Value = 0;
+                    maxpricebox.Value = 0;
+                    checkprices();
+                }
             }
         }
         private void updatebutton_Click(object sender, EventArgs e)
         {
             updateItem();
-            checkprices();
         }
         private void deleteItem()
         {
@@ -172,9 +228,9 @@ namespace PriceWatcherForm1
         private void notify()
         {
             notifyIcon1.Icon = SystemIcons.Application;
-            notifyIcon1.ShowBalloonTip(1000, "PriceWatcher Alert!", "Your item(s) hit your goal price.",ToolTipIcon.Info);
+            notifyIcon1.ShowBalloonTip(1000, "PriceWatcher Alert!", "Your item(s) hit your goal price.", ToolTipIcon.Info);
         }
-         private void checkprices()
+        private void checkprices()
         {
             foreach (ListViewItem row in watchlist.Items)
             {
@@ -198,7 +254,13 @@ namespace PriceWatcherForm1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            loadViewList();
+            checkprices();
+        }
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            saveViewList();
         }
     }
 }

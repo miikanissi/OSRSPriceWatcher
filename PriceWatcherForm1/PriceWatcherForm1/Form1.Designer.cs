@@ -191,7 +191,7 @@
             // 
             // updatebutton
             // 
-            this.updatebutton.Location = new System.Drawing.Point(453, 42);
+            this.updatebutton.Location = new System.Drawing.Point(453, 43);
             this.updatebutton.Name = "updatebutton";
             this.updatebutton.Size = new System.Drawing.Size(120, 47);
             this.updatebutton.TabIndex = 25;
@@ -256,6 +256,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PriceWatcher by Piksu";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);

@@ -18,5 +18,13 @@ namespace PriceWatcherForm1
                     ((string)x["name"]).ToLower() == 
                     itemname.ToLower())?["overall_average"];
         }
+        public string GetItem(string itemname, JObject OSBJson)
+        {
+            return
+                (string)OSBJson.Properties().Values<JObject>
+                ().FirstOrDefault(x =>
+                ((string)x["name"]).ToLower() ==
+                itemname.ToLower())?["name"];
+        }
     }
 }

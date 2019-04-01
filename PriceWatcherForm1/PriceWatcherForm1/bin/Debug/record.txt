@@ -1,0 +1,6 @@
+﻿Cannonball,143,0,0
+Rune Scimitar,15055,0,0
+Dragon dagger,17596,100000,0
+Dragon dagger,17596,0,0
+Cannonball,143,0,0
+Prayer potion(4),8749,8000,8500
