@@ -1,10 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -77,33 +80,69 @@ namespace PriceWatcherForm1
             }
             
         }
+        /*private Image LoadImage(string url)
+        {
+            System.Net.WebRequest request =
+                System.Net.WebRequest.Create(url);
+
+            System.Net.WebResponse response = request.GetResponse();
+            System.IO.Stream responseStream =
+                response.GetResponseStream();
+
+            Bitmap bmp = new Bitmap(responseStream);
+
+            responseStream.Dispose();
+
+            return bmp;
+        }*/
         private void additembtn_Click(object sender, EventArgs e)
         {
-            GetItemPrice getItemPrice = new GetItemPrice();
+
             JObject OSBJson = JObject.Parse(new WebClient().DownloadString("https://rsbuddy.com/exchange/summary.json"));
+            GetItemPrice getItemPrice = new GetItemPrice();
+
+
+            IList<string> keys = OSBJson.Properties().Select(p => p.Name).ToList();
+
             string nimi = getItemPrice.GetItem(itembox.Text, OSBJson);
-            if (nimi != itembox.Text)
+            if (!string.Equals(nimi, itembox.Text, StringComparison.CurrentCultureIgnoreCase))
             {
                 return;
             }
             else
             {
+                /*string id = getItemPrice.GetItemID(itembox.Text, OSBJson);
+                string pic = getItemPrice.GetItemImage(id);
+                ImageList myImageList = new ImageList();
+                var img = LoadImage(pic);
+                //myImageList.Images.Add(img);
 
+                img.Save(Application.StartupPath + @"\Images\MyImage" + id +".gif", ImageFormat.Gif);
+                Image myImg = Image.FromFile((Application.StartupPath + @"\Images\MyImage" + id + ".gif");
+                myImageList.Images.Add(myImg);
+                */
                 if ((minpricebox.Value > maxpricebox.Value) && (minpricebox.Value != 0 && maxpricebox.Value != 0))
                 {
                     return;
                 }
                 else
                 {
+                     //watchlist.SmallImageList = myImageList;
+                    
                     ListViewItem lvi = new ListViewItem(itembox.Text);
                     lvi.SubItems.Add(getItemPrice.GetItemPrices(itembox.Text, OSBJson));
                     lvi.SubItems.Add(minpricebox.Value.ToString());
                     lvi.SubItems.Add(maxpricebox.Value.ToString());
+
+
+                   // lvi.ImageIndex = 0;
+                    
                     watchlist.Items.Add(lvi);
                     itembox.Text = "";
                     minpricebox.Value = 0;
                     maxpricebox.Value = 0;
                     checkprices();
+
                 }
             }
         }
@@ -112,14 +151,6 @@ namespace PriceWatcherForm1
         {
             updatePrice();
             checkprices();
-            /* GetItemPrice getItemPrice = new GetItemPrice();
-             string item = string.Empty;
-             foreach (ListViewItem anItem in watchlist.Items)
-             {
-
-                 anItem.SubItems.Add(getItemPrice.GetItemPrices(anItem.Text));
-
-             }*/
         }
         private void updatePrice()
         {
@@ -138,7 +169,7 @@ namespace PriceWatcherForm1
             GetItemPrice getItemPrice = new GetItemPrice();
 
             string nimi = getItemPrice.GetItem(itembox.Text, OSBJson);
-            if (nimi != itembox.Text)
+            if (!string.Equals(nimi, itembox.Text, StringComparison.CurrentCultureIgnoreCase))
             {
                 return;
             }
@@ -236,12 +267,12 @@ namespace PriceWatcherForm1
             {
                 if ((Int32.Parse(row.SubItems[2].Text) != 0) && (Int32.Parse(row.SubItems[2].Text) >= Int32.Parse(row.SubItems[1].Text)))
                 {
-                    row.BackColor = System.Drawing.Color.Green;
+                    row.BackColor = System.Drawing.Color.LightGreen;
                     notify();
                 }
                 else if ((Int32.Parse(row.SubItems[3].Text) != 0) && (Int32.Parse(row.SubItems[3].Text) <= Int32.Parse(row.SubItems[1].Text)))
                 {
-                    row.BackColor = System.Drawing.Color.Red;
+                    row.BackColor = System.Drawing.Color.Salmon;
                     notify();
                 }
                 else
@@ -256,11 +287,38 @@ namespace PriceWatcherForm1
         {
             loadViewList();
             checkprices();
+            var source = new AutoCompleteStringCollection();
+
+            var OSBJson = JObject.Parse(new WebClient().DownloadString("https://rsbuddy.com/exchange/summary.json"));
+
+            foreach (KeyValuePair<string, JToken> item in OSBJson)
+            {
+                var name = (string)item.Value["name"];
+                source.Add(name);
+
+            }
+            itembox.AutoCompleteCustomSource = source;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             saveViewList();
+        }
+
+        private void toolsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rsBToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo sInfo = new ProcessStartInfo("https://rsbuddy.com/exchange");
+            Process.Start(sInfo);
+        }
+
+        private void itembox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -40,3 +40,8 @@ C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\Price
 C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcherForm1.csproj.CopyComplete
 C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.exe
 C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.pdb
+D:\Code\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\PriceWatcher.exe.manifest
+D:\Code\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\PriceWatcher.application
+D:\Code\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.TrustInfo.xml
+D:\Code\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.exe.manifest
+D:\Code\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.application

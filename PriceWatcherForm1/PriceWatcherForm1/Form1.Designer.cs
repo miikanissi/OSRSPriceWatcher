@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rsBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.itembox = new System.Windows.Forms.TextBox();
             this.minprice = new System.Windows.Forms.Label();
@@ -67,9 +68,19 @@
             // 
             // toolsToolStripMenuItem
             // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rsBToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
+            this.toolsToolStripMenuItem.Click += new System.EventHandler(this.toolsToolStripMenuItem_Click);
+            // 
+            // rsBToolStripMenuItem
+            // 
+            this.rsBToolStripMenuItem.Name = "rsBToolStripMenuItem";
+            this.rsBToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.rsBToolStripMenuItem.Text = "RSBuddy Exchange";
+            this.rsBToolStripMenuItem.Click += new System.EventHandler(this.rsBToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -82,10 +93,17 @@
             // 
             // itembox
             // 
+            this.itembox.AutoCompleteCustomSource.AddRange(new string[] {
+            "Cannonball",
+            "Cannonball",
+            "Cannonball"});
+            this.itembox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.itembox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.itembox.Location = new System.Drawing.Point(58, 43);
             this.itembox.Name = "itembox";
             this.itembox.Size = new System.Drawing.Size(355, 20);
             this.itembox.TabIndex = 11;
+            this.itembox.TextChanged += new System.EventHandler(this.itembox_TextChanged);
             // 
             // minprice
             // 
@@ -162,22 +180,22 @@
             // Item
             // 
             this.Item.Text = "Item";
-            this.Item.Width = 172;
+            this.Item.Width = 168;
             // 
             // Currentprice
             // 
             this.Currentprice.Text = "Current price";
-            this.Currentprice.Width = 174;
+            this.Currentprice.Width = 170;
             // 
             // minpricee
             // 
             this.minpricee.Text = "Min Price";
-            this.minpricee.Width = 160;
+            this.minpricee.Width = 170;
             // 
             // maxpricee
             // 
             this.maxpricee.Text = "Max Price";
-            this.maxpricee.Width = 171;
+            this.maxpricee.Width = 170;
             // 
             // updatepricesbutton
             // 
@@ -211,7 +229,7 @@
             // 
             // updatetimer
             // 
-            this.updatetimer.Interval = 10000;
+            this.updatetimer.Interval = 1000000;
             this.updatetimer.Tick += new System.EventHandler(this.updatetimer_Tick);
             // 
             // updaterstart
@@ -253,6 +271,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PriceWatcher by Piksu";
@@ -289,6 +308,7 @@
         private System.Windows.Forms.Timer updatetimer;
         private System.Windows.Forms.Button updaterstart;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ToolStripMenuItem rsBToolStripMenuItem;
     }
 }
 
