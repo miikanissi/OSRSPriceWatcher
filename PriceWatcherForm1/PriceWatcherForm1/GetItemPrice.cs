@@ -29,11 +29,14 @@ namespace PriceWatcherForm1
         }
         public string GetItemPrices(string itemname, JObject OSBJson)
         {
-                return 
+                string oavrg = 
                     (string)OSBJson.Properties().Values<JObject>
                     ().FirstOrDefault(x => 
                     ((string)x["name"]).ToLower() == 
                     itemname.ToLower())?["overall_average"];
+
+            return oavrg;
+                
         }
         public string GetItem(string itemname, JObject OSBJson)
         {

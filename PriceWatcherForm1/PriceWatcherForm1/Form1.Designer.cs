@@ -42,6 +42,7 @@
             this.maxpricebox = new System.Windows.Forms.NumericUpDown();
             this.maxprice = new System.Windows.Forms.Label();
             this.watchlist = new System.Windows.Forms.ListView();
+            this.iconi = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Item = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Currentprice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.minpricee = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -59,6 +60,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -75,7 +77,6 @@
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
-            this.toolsToolStripMenuItem.Click += new System.EventHandler(this.toolsToolStripMenuItem_Click);
             // 
             // rsBToolStripMenuItem
             // 
@@ -112,7 +113,6 @@
             this.itembox.Name = "itembox";
             this.itembox.Size = new System.Drawing.Size(355, 20);
             this.itembox.TabIndex = 11;
-            this.itembox.TextChanged += new System.EventHandler(this.itembox_TextChanged);
             // 
             // minprice
             // 
@@ -144,6 +144,7 @@
             this.minpricebox.Name = "minpricebox";
             this.minpricebox.Size = new System.Drawing.Size(130, 20);
             this.minpricebox.TabIndex = 20;
+            this.minpricebox.ThousandsSeparator = true;
             // 
             // maxpricebox
             // 
@@ -156,6 +157,7 @@
             this.maxpricebox.Name = "maxpricebox";
             this.maxpricebox.Size = new System.Drawing.Size(130, 20);
             this.maxpricebox.TabIndex = 22;
+            this.maxpricebox.ThousandsSeparator = true;
             // 
             // maxprice
             // 
@@ -169,6 +171,7 @@
             // watchlist
             // 
             this.watchlist.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.iconi,
             this.Item,
             this.Currentprice,
             this.minpricee,
@@ -176,35 +179,39 @@
             this.watchlist.ForeColor = System.Drawing.SystemColors.WindowText;
             this.watchlist.FullRowSelect = true;
             this.watchlist.GridLines = true;
-            this.watchlist.Location = new System.Drawing.Point(28, 109);
+            this.watchlist.Location = new System.Drawing.Point(29, 110);
             this.watchlist.MultiSelect = false;
             this.watchlist.Name = "watchlist";
             this.watchlist.Size = new System.Drawing.Size(682, 267);
             this.watchlist.TabIndex = 23;
             this.watchlist.UseCompatibleStateImageBehavior = false;
             this.watchlist.View = System.Windows.Forms.View.Details;
-            this.watchlist.SelectedIndexChanged += new System.EventHandler(this.watchlist_SelectedIndexChanged);
             this.watchlist.MouseClick += new System.Windows.Forms.MouseEventHandler(this.watchlist_MouseClick);
+            // 
+            // iconi
+            // 
+            this.iconi.Text = "";
+            this.iconi.Width = 26;
             // 
             // Item
             // 
             this.Item.Text = "Item";
-            this.Item.Width = 168;
+            this.Item.Width = 163;
             // 
             // Currentprice
             // 
             this.Currentprice.Text = "Current price";
-            this.Currentprice.Width = 170;
+            this.Currentprice.Width = 163;
             // 
             // minpricee
             // 
             this.minpricee.Text = "Min Price";
-            this.minpricee.Width = 170;
+            this.minpricee.Width = 163;
             // 
             // maxpricee
             // 
             this.maxpricee.Text = "Max Price";
-            this.maxpricee.Width = 170;
+            this.maxpricee.Width = 163;
             // 
             // updatepricesbutton
             // 
@@ -250,7 +257,6 @@
             this.updaterstart.Text = "Start updater";
             this.updaterstart.UseVisualStyleBackColor = true;
             this.updaterstart.Click += new System.EventHandler(this.updaterstart_Click);
-            this.updaterstart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.updaterstart_MouseClick);
             // 
             // notifyIcon1
             // 
@@ -321,6 +327,7 @@
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ToolStripMenuItem rsBToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader iconi;
     }
 }
 

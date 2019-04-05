@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="PriceWatcher.exe" size="1055232">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="PriceWatcher.exe" size="1058816">
       <assemblyIdentity name="PriceWatcher" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>9fGUiHEq22p+kQYHfj6q4OFMjPpI2tCOS2LI9NokeYc=</dsig:DigestValue>
+        <dsig:DigestValue>UW06cdUEQrlXv3XbA3DWzsdjWaXNsyfNQJEXgHVMwp8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

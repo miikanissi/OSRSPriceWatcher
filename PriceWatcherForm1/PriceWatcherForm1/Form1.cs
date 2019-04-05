@@ -41,10 +41,6 @@ namespace PriceWatcherForm1
         }
 
 
-        private void watchlist_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
         private void saveViewList()
         {
             String path = Application.StartupPath + @"\record.txt";
@@ -56,13 +52,15 @@ namespace PriceWatcherForm1
             {
                 foreach (ListViewItem item in watchlist.Items)
                 {
-                    textStream.WriteLine("{0},{1},{2},{3}", item.Text, item.SubItems[1].Text, item.SubItems[2].Text, item.SubItems[3].Text);
+                    textStream.WriteLine("{0},{1},{2},{3}", item.SubItems[1].Text, item.SubItems[2].Text, item.SubItems[3].Text, item.SubItems[4].Text);
                 }
                 textStream.Close();
             }
         }
         private void loadViewList()
         {
+            GetItemPrice getItemPrice = new GetItemPrice();
+            JObject OSBJson = JObject.Parse(new WebClient().DownloadString("https://rsbuddy.com/exchange/summary.json"));
             String file = Application.StartupPath + @"\record.txt";
             if (!File.Exists(file))
             {
@@ -73,21 +71,34 @@ namespace PriceWatcherForm1
             {
                 using (var sr = new StreamReader(file))
                 {
+
                     string fileLine;
                     while ((fileLine = sr.ReadLine()) != null)
                     {
                         string[] rivi = fileLine.Split(',');
+                        string id = getItemPrice.GetItemID(rivi[0], OSBJson);
+                        string pic = getItemPrice.GetItemImage(id);
+
+                        var img = LoadImage(pic);
+                        myImageList.Images.Add("icon" + rivi[0], img);
+
+                        watchlist.SmallImageList = myImageList;
+
+
                         ListViewItem lvi = new ListViewItem();
-                        lvi.Text = rivi[0];
+
+                        lvi.SubItems.Add(rivi[0]);
                         lvi.SubItems.Add(rivi[1]);
                         lvi.SubItems.Add(rivi[2]);
                         lvi.SubItems.Add(rivi[3]);
+                        lvi.ImageKey = "icon" + rivi[0];
+
                         watchlist.Items.Add(lvi);
                     }
                 }
             }
         }
-        /*private Image LoadImage(string url)
+        private Image LoadImage(string url)
         {
             System.Net.WebRequest request =
                 System.Net.WebRequest.Create(url);
@@ -101,14 +112,13 @@ namespace PriceWatcherForm1
             responseStream.Dispose();
 
             return bmp;
-        }*/
+        }
+        ImageList myImageList = new ImageList();
         private void additem()
         {
             JObject OSBJson = JObject.Parse(new WebClient().DownloadString("https://rsbuddy.com/exchange/summary.json"));
             GetItemPrice getItemPrice = new GetItemPrice();
 
-
-            //IList<string> keys = OSBJson.Properties().Select(p => p.Name).ToList();
 
             string nimi = getItemPrice.GetItem(itembox.Text, OSBJson);
             if (!string.Equals(nimi, itembox.Text, StringComparison.CurrentCultureIgnoreCase))
@@ -117,48 +127,51 @@ namespace PriceWatcherForm1
             }
             else
             {
-                /*string id = getItemPrice.GetItemID(itembox.Text, OSBJson);
+                string id = getItemPrice.GetItemID(itembox.Text, OSBJson);
                 string pic = getItemPrice.GetItemImage(id);
-                ImageList myImageList = new ImageList();
-                var img = LoadImage(pic);
-                //myImageList.Images.Add(img);
-
-                img.Save(Application.StartupPath + @"\Images\MyImage" + id +".gif", ImageFormat.Gif);
-                Image myImg = Image.FromFile((Application.StartupPath + @"\Images\MyImage" + id + ".gif");
-                myImageList.Images.Add(myImg);
-                */
+                
+                
                 if ((minpricebox.Value > maxpricebox.Value) && (minpricebox.Value != 0 && maxpricebox.Value != 0))
                 {
                     return;
                 }
                 else
                 {
-                    //watchlist.SmallImageList = myImageList;
+                    var img = LoadImage(pic);
+                    myImageList.Images.Add("icon" + itembox.Text, img);
 
-                    ListViewItem lvi = new ListViewItem(itembox.Text);
+                    watchlist.SmallImageList = myImageList;
+                    
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.SubItems.Add(itembox.Text);
                     lvi.SubItems.Add(getItemPrice.GetItemPrices(itembox.Text, OSBJson));
                     lvi.SubItems.Add(minpricebox.Value.ToString());
                     lvi.SubItems.Add(maxpricebox.Value.ToString());
+                    lvi.ImageKey = "icon" + itembox.Text;
 
-
-                    // lvi.ImageIndex = 0;
-
-
-                    if ((Int32.Parse(lvi.SubItems[2].Text) != 0) && (Int32.Parse(lvi.SubItems[2].Text) >= Int32.Parse(lvi.SubItems[1].Text)))
+                    if (Int32.Parse(lvi.SubItems[2].Text) != 0)
                     {
-                        lvi.BackColor = System.Drawing.Color.LightGreen;
-                        notify(lvi.SubItems[0].Text, lvi.SubItems[1].Text);
-                    }
-                    else if ((Int32.Parse(lvi.SubItems[3].Text) != 0) && (Int32.Parse(lvi.SubItems[3].Text) <= Int32.Parse(lvi.SubItems[1].Text)))
-                    {
-                        lvi.BackColor = System.Drawing.Color.Salmon;
-                        notify(lvi.SubItems[0].Text, lvi.SubItems[1].Text);
+                        if ((Int32.Parse(lvi.SubItems[3].Text) != 0) && (Int32.Parse(lvi.SubItems[3].Text) >= Int32.Parse(lvi.SubItems[2].Text)))
+                        {
+                            lvi.BackColor = System.Drawing.Color.LightGreen;
+                            notify(lvi.SubItems[1].Text, lvi.SubItems[2].Text);
+                        }
+                        else if ((Int32.Parse(lvi.SubItems[4].Text) != 0) && (Int32.Parse(lvi.SubItems[4].Text) <= Int32.Parse(lvi.SubItems[2].Text)))
+                        {
+                            lvi.BackColor = System.Drawing.Color.Salmon;
+                            notify(lvi.SubItems[1].Text, lvi.SubItems[2].Text);
+                        }
+                        else
+                        {
+                            lvi.BackColor = System.Drawing.Color.White;
+                        }
                     }
                     else
                     {
                         lvi.BackColor = System.Drawing.Color.White;
                     }
                     watchlist.Items.Add(lvi);
+
                     itembox.Text = "";
                     minpricebox.Value = 0;
                     maxpricebox.Value = 0;
@@ -175,17 +188,25 @@ namespace PriceWatcherForm1
         private void updatepricesbutton_Click(object sender, EventArgs e)
         {
             updatePrice();
-            checkprices();
+            checkprices(); 
         }
         private void updatePrice()
         {
             JObject OSBJson = JObject.Parse(new WebClient().DownloadString("https://rsbuddy.com/exchange/summary.json"));
             GetItemPrice getItemPrice = new GetItemPrice();
-            watchlist.SelectedItems[0].SubItems[1].Text = getItemPrice.GetItemPrices(watchlist.SelectedItems[0].SubItems[0].Text, OSBJson);
+            int itemprice = Int32.Parse(getItemPrice.GetItemPrices(watchlist.SelectedItems[0].SubItems[1].Text, OSBJson));
+            if (itemprice == 0)
+            {
 
-            itembox.Text = "";
-            minpricebox.Value = 0;
-            maxpricebox.Value = 0;
+            }
+            else
+            {
+                watchlist.SelectedItems[0].SubItems[2].Text = itemprice.ToString();
+
+                itembox.Text = "";
+                minpricebox.Value = 0;
+                maxpricebox.Value = 0;
+            }
         }
         private void updateItem()
         {
@@ -206,28 +227,39 @@ namespace PriceWatcherForm1
                 }
                 else
                 {
+                    string id = getItemPrice.GetItemID(itembox.Text, OSBJson);
+                    string pic = getItemPrice.GetItemImage(id);
 
-                    watchlist.SelectedItems[0].SubItems[0].Text = itembox.Text;
-                    watchlist.SelectedItems[0].SubItems[1].Text = getItemPrice.GetItemPrices(itembox.Text, OSBJson);
-                    watchlist.SelectedItems[0].SubItems[2].Text = minpricebox.Value.ToString();
-                    watchlist.SelectedItems[0].SubItems[3].Text = maxpricebox.Value.ToString();
+                    var img = LoadImage(pic);
+                    myImageList.Images.Add("icon" + itembox.Text, img);
 
+                    watchlist.SelectedItems[0].ImageKey = "icon" + itembox.Text;
+                    watchlist.SelectedItems[0].SubItems[1].Text = itembox.Text;
+                    watchlist.SelectedItems[0].SubItems[2].Text = getItemPrice.GetItemPrices(itembox.Text, OSBJson);
+                    watchlist.SelectedItems[0].SubItems[3].Text = minpricebox.Value.ToString();
+                    watchlist.SelectedItems[0].SubItems[4].Text = maxpricebox.Value.ToString();
 
-                    if ((Int32.Parse(watchlist.SelectedItems[0].SubItems[2].Text) != 0) && (Int32.Parse(watchlist.SelectedItems[0].SubItems[2].Text) >= Int32.Parse(watchlist.SelectedItems[0].SubItems[1].Text)))
+                    if (Int32.Parse(watchlist.SelectedItems[0].SubItems[2].Text) != 0)
                     {
-                        watchlist.SelectedItems[0].BackColor = System.Drawing.Color.LightGreen;
-                        notify(watchlist.SelectedItems[0].SubItems[0].Text, watchlist.SelectedItems[0].SubItems[1].Text);
-                    }
-                    else if ((Int32.Parse(watchlist.SelectedItems[0].SubItems[3].Text) != 0) && (Int32.Parse(watchlist.SelectedItems[0].SubItems[3].Text) <= Int32.Parse(watchlist.SelectedItems[0].SubItems[1].Text)))
-                    {
-                        watchlist.SelectedItems[0].BackColor = System.Drawing.Color.Salmon;
-                        notify(watchlist.SelectedItems[0].SubItems[0].Text, watchlist.SelectedItems[0].SubItems[1].Text);
+                        if ((Int32.Parse(watchlist.SelectedItems[0].SubItems[3].Text) != 0) && (Int32.Parse(watchlist.SelectedItems[0].SubItems[3].Text) >= Int32.Parse(watchlist.SelectedItems[0].SubItems[2].Text)))
+                        {
+                            watchlist.SelectedItems[0].BackColor = System.Drawing.Color.LightGreen;
+                            notify(watchlist.SelectedItems[0].SubItems[1].Text, watchlist.SelectedItems[0].SubItems[2].Text);
+                        }
+                        else if ((Int32.Parse(watchlist.SelectedItems[0].SubItems[4].Text) != 0) && (Int32.Parse(watchlist.SelectedItems[0].SubItems[4].Text) <= Int32.Parse(watchlist.SelectedItems[0].SubItems[2].Text)))
+                        {
+                            watchlist.SelectedItems[0].BackColor = System.Drawing.Color.Salmon;
+                            notify(watchlist.SelectedItems[0].SubItems[1].Text, watchlist.SelectedItems[0].SubItems[2].Text);
+                        }
+                        else
+                        {
+                            watchlist.SelectedItems[0].BackColor = System.Drawing.Color.White;
+                        }
                     }
                     else
                     {
                         watchlist.SelectedItems[0].BackColor = System.Drawing.Color.White;
                     }
-
                     itembox.Text = "";
                     minpricebox.Value = 0;
                     maxpricebox.Value = 0;
@@ -260,9 +292,9 @@ namespace PriceWatcherForm1
 
         private void watchlist_MouseClick(object sender, MouseEventArgs e)
         {
-            itembox.Text = watchlist.SelectedItems[0].SubItems[0].Text;
-            minpricebox.Value = Int32.Parse(watchlist.SelectedItems[0].SubItems[2].Text);
-            maxpricebox.Value = Int32.Parse(watchlist.SelectedItems[0].SubItems[3].Text);
+            itembox.Text = watchlist.SelectedItems[0].SubItems[1].Text;
+            minpricebox.Value = Int32.Parse(watchlist.SelectedItems[0].SubItems[3].Text);
+            maxpricebox.Value = Int32.Parse(watchlist.SelectedItems[0].SubItems[4].Text);
 
         }
 
@@ -286,45 +318,49 @@ namespace PriceWatcherForm1
             GetItemPrice getItemPrice = new GetItemPrice();
             foreach (ListViewItem row in watchlist.Items)
             {
-                row.SubItems[1] = new ListViewItem.ListViewSubItem(row, getItemPrice.GetItemPrices(row.SubItems[0].Text, OSBJson));
+                row.SubItems[2] = new ListViewItem.ListViewSubItem(row, getItemPrice.GetItemPrices(row.SubItems[1].Text, OSBJson));
             }
             checkprices();
         }
 
-        private void updaterstart_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
 
         private void notify(string name, string price)
         {
             notifyIcon1.Icon = SystemIcons.Application;
-            notifyIcon1.ShowBalloonTip(1000, "PriceWatcher Alert!", name + " is now " + price + "gp", ToolTipIcon.Info);
+            notifyIcon1.ShowBalloonTip(1000, "PriceWatcher", name + " is now " + price + " gp", ToolTipIcon.Info);
         }
         private void checkprices()
         {
             foreach (ListViewItem row in watchlist.Items)
             {
-                if ((Int32.Parse(row.SubItems[2].Text) != 0) && (Int32.Parse(row.SubItems[2].Text) >= Int32.Parse(row.SubItems[1].Text)))
+                if (Int32.Parse(row.SubItems[2].Text) != 0)
                 {
-                    row.BackColor = System.Drawing.Color.LightGreen;
-                    notify(row.SubItems[0].Text, row.SubItems[1].Text);
-                }
-                else if ((Int32.Parse(row.SubItems[3].Text) != 0) && (Int32.Parse(row.SubItems[3].Text) <= Int32.Parse(row.SubItems[1].Text)))
-                {
-                    row.BackColor = System.Drawing.Color.Salmon;
-                    notify(row.SubItems[0].Text, row.SubItems[1].Text);
+                    if ((Int32.Parse(row.SubItems[3].Text) != 0) && (Int32.Parse(row.SubItems[3].Text) >= Int32.Parse(row.SubItems[2].Text)))
+                    {
+                        row.BackColor = System.Drawing.Color.LightGreen;
+                        notify(row.SubItems[0].Text, row.SubItems[1].Text);
+                    }
+                    else if ((Int32.Parse(row.SubItems[4].Text) != 0) && (Int32.Parse(row.SubItems[4].Text) <= Int32.Parse(row.SubItems[2].Text)))
+                    {
+                        row.BackColor = System.Drawing.Color.Salmon;
+                        notify(row.SubItems[0].Text, row.SubItems[1].Text);
+                    }
+                    else
+                    {
+                        row.BackColor = System.Drawing.Color.White;
+                    }
                 }
                 else
                 {
                     row.BackColor = System.Drawing.Color.White;
                 }
-
+                      
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            AutoCompleteTextBox autoCompleteTextBox = new AutoCompleteTextBox();
             loadViewList();
             checkprices();
             var source = new AutoCompleteStringCollection();
@@ -337,6 +373,7 @@ namespace PriceWatcherForm1
                 source.Add(name);
 
             }
+
             itembox.AutoCompleteCustomSource = source;
         }
 
@@ -345,10 +382,6 @@ namespace PriceWatcherForm1
             saveViewList();
         }
 
-        private void toolsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void rsBToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -356,24 +389,11 @@ namespace PriceWatcherForm1
             Process.Start(sInfo);
         }
 
-        private void itembox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ProcessStartInfo sInfo = new ProcessStartInfo("https://pastebin.com/7HryGWAm");
             Process.Start(sInfo);
-        }
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == (Keys.Control | Keys.Enter))
-            {
-                additem();
-                return true;
-            }
-            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
