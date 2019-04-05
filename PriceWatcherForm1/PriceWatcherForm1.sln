@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceWatcherForm1", "PriceWatcherForm1\PriceWatcherForm1.csproj", "{AD11B46C-CBCF-4322-A55B-163C5C275615}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PriceWatcher", "PriceWatcher\PriceWatcher.vdproj", "{5409D983-1A59-4504-B803-6C8811D93EE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{AD11B46C-CBCF-4322-A55B-163C5C275615}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD11B46C-CBCF-4322-A55B-163C5C275615}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD11B46C-CBCF-4322-A55B-163C5C275615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5409D983-1A59-4504-B803-6C8811D93EE2}.Debug|Any CPU.ActiveCfg = Debug
+		{5409D983-1A59-4504-B803-6C8811D93EE2}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

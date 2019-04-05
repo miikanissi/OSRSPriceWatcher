@@ -64,21 +64,28 @@ namespace PriceWatcherForm1
         private void loadViewList()
         {
             String file = Application.StartupPath + @"\record.txt";
-            using (var sr = new StreamReader(file))
+            if (!File.Exists(file))
             {
-                string fileLine;
-                while ((fileLine = sr.ReadLine()) != null)
+                File.Create(file);
+
+            }
+            else if (File.Exists(file))
+            {
+                using (var sr = new StreamReader(file))
                 {
-                    string[] rivi = fileLine.Split(',');
-                    ListViewItem lvi = new ListViewItem();
-                    lvi.Text = rivi[0];
-                    lvi.SubItems.Add(rivi[1]);
-                    lvi.SubItems.Add(rivi[2]);
-                    lvi.SubItems.Add(rivi[3]);
-                    watchlist.Items.Add(lvi);
+                    string fileLine;
+                    while ((fileLine = sr.ReadLine()) != null)
+                    {
+                        string[] rivi = fileLine.Split(',');
+                        ListViewItem lvi = new ListViewItem();
+                        lvi.Text = rivi[0];
+                        lvi.SubItems.Add(rivi[1]);
+                        lvi.SubItems.Add(rivi[2]);
+                        lvi.SubItems.Add(rivi[3]);
+                        watchlist.Items.Add(lvi);
+                    }
                 }
             }
-            
         }
         /*private Image LoadImage(string url)
         {
@@ -95,14 +102,13 @@ namespace PriceWatcherForm1
 
             return bmp;
         }*/
-        private void additembtn_Click(object sender, EventArgs e)
+        private void additem()
         {
-
             JObject OSBJson = JObject.Parse(new WebClient().DownloadString("https://rsbuddy.com/exchange/summary.json"));
             GetItemPrice getItemPrice = new GetItemPrice();
 
 
-            IList<string> keys = OSBJson.Properties().Select(p => p.Name).ToList();
+            //IList<string> keys = OSBJson.Properties().Select(p => p.Name).ToList();
 
             string nimi = getItemPrice.GetItem(itembox.Text, OSBJson);
             if (!string.Equals(nimi, itembox.Text, StringComparison.CurrentCultureIgnoreCase))
@@ -127,24 +133,43 @@ namespace PriceWatcherForm1
                 }
                 else
                 {
-                     //watchlist.SmallImageList = myImageList;
-                    
+                    //watchlist.SmallImageList = myImageList;
+
                     ListViewItem lvi = new ListViewItem(itembox.Text);
                     lvi.SubItems.Add(getItemPrice.GetItemPrices(itembox.Text, OSBJson));
                     lvi.SubItems.Add(minpricebox.Value.ToString());
                     lvi.SubItems.Add(maxpricebox.Value.ToString());
 
 
-                   // lvi.ImageIndex = 0;
-                    
+                    // lvi.ImageIndex = 0;
+
+
+                    if ((Int32.Parse(lvi.SubItems[2].Text) != 0) && (Int32.Parse(lvi.SubItems[2].Text) >= Int32.Parse(lvi.SubItems[1].Text)))
+                    {
+                        lvi.BackColor = System.Drawing.Color.LightGreen;
+                        notify(lvi.SubItems[0].Text, lvi.SubItems[1].Text);
+                    }
+                    else if ((Int32.Parse(lvi.SubItems[3].Text) != 0) && (Int32.Parse(lvi.SubItems[3].Text) <= Int32.Parse(lvi.SubItems[1].Text)))
+                    {
+                        lvi.BackColor = System.Drawing.Color.Salmon;
+                        notify(lvi.SubItems[0].Text, lvi.SubItems[1].Text);
+                    }
+                    else
+                    {
+                        lvi.BackColor = System.Drawing.Color.White;
+                    }
                     watchlist.Items.Add(lvi);
                     itembox.Text = "";
                     minpricebox.Value = 0;
                     maxpricebox.Value = 0;
-                    checkprices();
 
                 }
             }
+        }
+        private void additembtn_Click(object sender, EventArgs e)
+        {
+            additem();
+            
         }
 
         private void updatepricesbutton_Click(object sender, EventArgs e)
@@ -187,10 +212,25 @@ namespace PriceWatcherForm1
                     watchlist.SelectedItems[0].SubItems[2].Text = minpricebox.Value.ToString();
                     watchlist.SelectedItems[0].SubItems[3].Text = maxpricebox.Value.ToString();
 
+
+                    if ((Int32.Parse(watchlist.SelectedItems[0].SubItems[2].Text) != 0) && (Int32.Parse(watchlist.SelectedItems[0].SubItems[2].Text) >= Int32.Parse(watchlist.SelectedItems[0].SubItems[1].Text)))
+                    {
+                        watchlist.SelectedItems[0].BackColor = System.Drawing.Color.LightGreen;
+                        notify(watchlist.SelectedItems[0].SubItems[0].Text, watchlist.SelectedItems[0].SubItems[1].Text);
+                    }
+                    else if ((Int32.Parse(watchlist.SelectedItems[0].SubItems[3].Text) != 0) && (Int32.Parse(watchlist.SelectedItems[0].SubItems[3].Text) <= Int32.Parse(watchlist.SelectedItems[0].SubItems[1].Text)))
+                    {
+                        watchlist.SelectedItems[0].BackColor = System.Drawing.Color.Salmon;
+                        notify(watchlist.SelectedItems[0].SubItems[0].Text, watchlist.SelectedItems[0].SubItems[1].Text);
+                    }
+                    else
+                    {
+                        watchlist.SelectedItems[0].BackColor = System.Drawing.Color.White;
+                    }
+
                     itembox.Text = "";
                     minpricebox.Value = 0;
                     maxpricebox.Value = 0;
-                    checkprices();
                 }
             }
         }
@@ -256,10 +296,10 @@ namespace PriceWatcherForm1
 
         }
 
-        private void notify()
+        private void notify(string name, string price)
         {
             notifyIcon1.Icon = SystemIcons.Application;
-            notifyIcon1.ShowBalloonTip(1000, "PriceWatcher Alert!", "Your item(s) hit your goal price.", ToolTipIcon.Info);
+            notifyIcon1.ShowBalloonTip(1000, "PriceWatcher Alert!", name + " is now " + price + "gp", ToolTipIcon.Info);
         }
         private void checkprices()
         {
@@ -268,12 +308,12 @@ namespace PriceWatcherForm1
                 if ((Int32.Parse(row.SubItems[2].Text) != 0) && (Int32.Parse(row.SubItems[2].Text) >= Int32.Parse(row.SubItems[1].Text)))
                 {
                     row.BackColor = System.Drawing.Color.LightGreen;
-                    notify();
+                    notify(row.SubItems[0].Text, row.SubItems[1].Text);
                 }
                 else if ((Int32.Parse(row.SubItems[3].Text) != 0) && (Int32.Parse(row.SubItems[3].Text) <= Int32.Parse(row.SubItems[1].Text)))
                 {
                     row.BackColor = System.Drawing.Color.Salmon;
-                    notify();
+                    notify(row.SubItems[0].Text, row.SubItems[1].Text);
                 }
                 else
                 {
@@ -319,6 +359,36 @@ namespace PriceWatcherForm1
         private void itembox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo sInfo = new ProcessStartInfo("https://pastebin.com/7HryGWAm");
+            Process.Start(sInfo);
+        }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.Enter))
+            {
+                additem();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (watchlist.SelectedItems.Count == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    deleteItem();
+                }
+            }
         }
     }
 }
