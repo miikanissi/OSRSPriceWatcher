@@ -45,3 +45,8 @@ D:\Code\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\PriceWatc
 D:\Code\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.TrustInfo.xml
 D:\Code\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.exe.manifest
 D:\Code\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.application
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\PriceWatcher.exe.manifest
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\bin\Debug\PriceWatcher.application
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.TrustInfo.xml
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.exe.manifest
+C:\Users\miika\OneDrive\Documents\repos\OSRSPriceWatcher\PriceWatcherForm1\PriceWatcherForm1\obj\Debug\PriceWatcher.application

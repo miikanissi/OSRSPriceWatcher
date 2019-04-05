@@ -51,6 +51,7 @@
             this.updatetimer = new System.Windows.Forms.Timer(this.components);
             this.updaterstart = new System.Windows.Forms.Button();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minpricebox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxpricebox)).BeginInit();
@@ -58,11 +59,13 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(731, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(1096, 35);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -71,23 +74,24 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.rsBToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
             this.toolsToolStripMenuItem.Text = "Tools";
             this.toolsToolStripMenuItem.Click += new System.EventHandler(this.toolsToolStripMenuItem_Click);
             // 
             // rsBToolStripMenuItem
             // 
             this.rsBToolStripMenuItem.Name = "rsBToolStripMenuItem";
-            this.rsBToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.rsBToolStripMenuItem.Size = new System.Drawing.Size(247, 30);
             this.rsBToolStripMenuItem.Text = "RSBuddy Exchange";
             this.rsBToolStripMenuItem.Click += new System.EventHandler(this.rsBToolStripMenuItem_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 46);
+            this.label1.Location = new System.Drawing.Point(38, 71);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(27, 13);
+            this.label1.Size = new System.Drawing.Size(41, 20);
             this.label1.TabIndex = 10;
             this.label1.Text = "Item";
             // 
@@ -99,26 +103,29 @@
             "Cannonball"});
             this.itembox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.itembox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.itembox.Location = new System.Drawing.Point(58, 43);
+            this.itembox.Location = new System.Drawing.Point(87, 66);
+            this.itembox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.itembox.Name = "itembox";
-            this.itembox.Size = new System.Drawing.Size(355, 20);
+            this.itembox.Size = new System.Drawing.Size(530, 26);
             this.itembox.TabIndex = 11;
             this.itembox.TextChanged += new System.EventHandler(this.itembox_TextChanged);
             // 
             // minprice
             // 
             this.minprice.AutoSize = true;
-            this.minprice.Location = new System.Drawing.Point(25, 76);
+            this.minprice.Location = new System.Drawing.Point(38, 117);
+            this.minprice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.minprice.Name = "minprice";
-            this.minprice.Size = new System.Drawing.Size(50, 13);
+            this.minprice.Size = new System.Drawing.Size(72, 20);
             this.minprice.TabIndex = 14;
             this.minprice.Text = "Min price";
             // 
             // additembtn
             // 
-            this.additembtn.Location = new System.Drawing.Point(590, 43);
+            this.additembtn.Location = new System.Drawing.Point(885, 66);
+            this.additembtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.additembtn.Name = "additembtn";
-            this.additembtn.Size = new System.Drawing.Size(120, 47);
+            this.additembtn.Size = new System.Drawing.Size(180, 72);
             this.additembtn.TabIndex = 16;
             this.additembtn.Text = "Add Item";
             this.additembtn.UseVisualStyleBackColor = true;
@@ -126,40 +133,46 @@
             // 
             // minpricebox
             // 
-            this.minpricebox.Location = new System.Drawing.Point(81, 73);
+            this.minpricebox.Location = new System.Drawing.Point(122, 112);
+            this.minpricebox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.minpricebox.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
             this.minpricebox.Name = "minpricebox";
-            this.minpricebox.Size = new System.Drawing.Size(130, 20);
+            this.minpricebox.Size = new System.Drawing.Size(195, 26);
             this.minpricebox.TabIndex = 20;
             // 
             // maxpricebox
             // 
-            this.maxpricebox.Location = new System.Drawing.Point(283, 73);
+            this.maxpricebox.Location = new System.Drawing.Point(424, 112);
+            this.maxpricebox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.maxpricebox.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
             this.maxpricebox.Name = "maxpricebox";
-            this.maxpricebox.Size = new System.Drawing.Size(130, 20);
+            this.maxpricebox.Size = new System.Drawing.Size(195, 26);
             this.maxpricebox.TabIndex = 22;
+            this.maxpricebox.ThousandsSeparator = true;
+            this.maxpricebox.ValueChanged += new System.EventHandler(this.maxpricebox_ValueChanged);
             // 
             // maxprice
             // 
             this.maxprice.AutoSize = true;
-            this.maxprice.Location = new System.Drawing.Point(227, 76);
+            this.maxprice.Location = new System.Drawing.Point(340, 117);
+            this.maxprice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.maxprice.Name = "maxprice";
-            this.maxprice.Size = new System.Drawing.Size(53, 13);
+            this.maxprice.Size = new System.Drawing.Size(76, 20);
             this.maxprice.TabIndex = 21;
             this.maxprice.Text = "Max price";
             // 
             // watchlist
             // 
             this.watchlist.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
             this.Item,
             this.Currentprice,
             this.minpricee,
@@ -167,10 +180,11 @@
             this.watchlist.ForeColor = System.Drawing.SystemColors.WindowText;
             this.watchlist.FullRowSelect = true;
             this.watchlist.GridLines = true;
-            this.watchlist.Location = new System.Drawing.Point(28, 109);
+            this.watchlist.Location = new System.Drawing.Point(44, 169);
+            this.watchlist.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.watchlist.MultiSelect = false;
             this.watchlist.Name = "watchlist";
-            this.watchlist.Size = new System.Drawing.Size(682, 267);
+            this.watchlist.Size = new System.Drawing.Size(1021, 409);
             this.watchlist.TabIndex = 23;
             this.watchlist.UseCompatibleStateImageBehavior = false;
             this.watchlist.View = System.Windows.Forms.View.Details;
@@ -180,28 +194,29 @@
             // Item
             // 
             this.Item.Text = "Item";
-            this.Item.Width = 168;
+            this.Item.Width = 160;
             // 
             // Currentprice
             // 
             this.Currentprice.Text = "Current price";
-            this.Currentprice.Width = 170;
+            this.Currentprice.Width = 140;
             // 
             // minpricee
             // 
             this.minpricee.Text = "Min Price";
-            this.minpricee.Width = 170;
+            this.minpricee.Width = 140;
             // 
             // maxpricee
             // 
             this.maxpricee.Text = "Max Price";
-            this.maxpricee.Width = 170;
+            this.maxpricee.Width = 140;
             // 
             // updatepricesbutton
             // 
-            this.updatepricesbutton.Location = new System.Drawing.Point(590, 382);
+            this.updatepricesbutton.Location = new System.Drawing.Point(885, 588);
+            this.updatepricesbutton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.updatepricesbutton.Name = "updatepricesbutton";
-            this.updatepricesbutton.Size = new System.Drawing.Size(120, 47);
+            this.updatepricesbutton.Size = new System.Drawing.Size(180, 72);
             this.updatepricesbutton.TabIndex = 24;
             this.updatepricesbutton.Text = "Update Price";
             this.updatepricesbutton.UseVisualStyleBackColor = true;
@@ -209,9 +224,10 @@
             // 
             // updatebutton
             // 
-            this.updatebutton.Location = new System.Drawing.Point(453, 43);
+            this.updatebutton.Location = new System.Drawing.Point(680, 66);
+            this.updatebutton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.updatebutton.Name = "updatebutton";
-            this.updatebutton.Size = new System.Drawing.Size(120, 47);
+            this.updatebutton.Size = new System.Drawing.Size(180, 72);
             this.updatebutton.TabIndex = 25;
             this.updatebutton.Text = "Update Item";
             this.updatebutton.UseVisualStyleBackColor = true;
@@ -219,9 +235,10 @@
             // 
             // deleteitembutton
             // 
-            this.deleteitembutton.Location = new System.Drawing.Point(453, 382);
+            this.deleteitembutton.Location = new System.Drawing.Point(680, 588);
+            this.deleteitembutton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.deleteitembutton.Name = "deleteitembutton";
-            this.deleteitembutton.Size = new System.Drawing.Size(120, 47);
+            this.deleteitembutton.Size = new System.Drawing.Size(180, 72);
             this.deleteitembutton.TabIndex = 26;
             this.deleteitembutton.Text = "Delete Item";
             this.deleteitembutton.UseVisualStyleBackColor = true;
@@ -234,9 +251,10 @@
             // 
             // updaterstart
             // 
-            this.updaterstart.Location = new System.Drawing.Point(28, 382);
+            this.updaterstart.Location = new System.Drawing.Point(42, 588);
+            this.updaterstart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.updaterstart.Name = "updaterstart";
-            this.updaterstart.Size = new System.Drawing.Size(210, 47);
+            this.updaterstart.Size = new System.Drawing.Size(315, 72);
             this.updaterstart.TabIndex = 27;
             this.updaterstart.Text = "Start updater";
             this.updaterstart.UseVisualStyleBackColor = true;
@@ -250,11 +268,16 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "";
+            this.columnHeader1.Width = 24;
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(731, 441);
+            this.ClientSize = new System.Drawing.Size(1096, 678);
             this.Controls.Add(this.updaterstart);
             this.Controls.Add(this.deleteitembutton);
             this.Controls.Add(this.updatebutton);
@@ -271,6 +294,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -309,6 +333,7 @@
         private System.Windows.Forms.Button updaterstart;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ToolStripMenuItem rsBToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }
 
